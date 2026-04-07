@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# Stealth-Phase: noindex, nofollow
+Sitemap: https://nah.jetzt/sitemap.xml
