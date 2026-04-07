@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NAH – Live Demo (akut.jetzt Vorschau)</title>
+  <meta name="description" content="Interaktive Handy-Vorschau der NAH-Plattform – akut.jetzt als Dummy-Inhalt.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚨</text></svg>">
+  <style>
+    body { background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%); min-height: 100vh; }
+
+    .preview-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 24px 120px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 60px;
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .preview-wrap { grid-template-columns: 1fr; padding-top: 40px; }
+    }
+
+    .preview-info h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+    .preview-info p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.65; margin-bottom: 16px; }
+    .preview-info .badge {
+      display: inline-block; padding: 6px 14px; border-radius: 999px;
+      background: var(--accent-soft); color: var(--accent);
+      font-size: .8rem; font-weight: 600; letter-spacing: .03em;
+      text-transform: uppercase; margin-bottom: 18px;
+    }
+    .preview-info .actions { margin-top: 26px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .preview-info .hint {
+      margin-top: 24px; padding: 14px 16px; border-left: 3px solid var(--accent);
+      background: #f1f5f9; border-radius: 6px; font-size: .9rem; color: var(--text-muted);
+    }
+
+    /* iPhone-style frame */
+    .phone {
+      position: relative;
+      width: 360px;
+      height: 740px;
+      margin: 0 auto;
+      background: #0b1020;
+      border-radius: 46px;
+      padding: 14px;
+      box-shadow:
+        0 0 0 2px #1a2236,
+        0 30px 60px -20px rgba(15, 23, 42, 0.4),
+        0 18px 40px -10px rgba(15, 23, 42, 0.25);
+    }
+    .phone::before {
+      content: ''; position: absolute; top: 18px; left: 50%;
+      transform: translateX(-50%);
+      width: 120px; height: 26px; background: #0b1020;
+      border-radius: 0 0 18px 18px; z-index: 3;
+    }
+    .phone::after {
+      content: ''; position: absolute; bottom: 8px; left: 50%;
+      transform: translateX(-50%);
+      width: 110px; height: 4px; background: #2a3550; border-radius: 4px;
+    }
+    .phone-screen {
+      position: relative;
+      width: 100%; height: 100%;
+      border-radius: 34px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .phone-screen iframe {
+      width: 100%; height: 100%;
+      border: 0; display: block;
+    }
+    .phone-fallback {
+      position: absolute; inset: 0;
+      display: none; flex-direction: column; align-items: center; justify-content: center;
+      gap: 14px; padding: 30px; text-align: center;
+      background: linear-gradient(160deg, #f8fafc, #eef2f7);
+      color: var(--text);
+    }
+    .phone-fallback.show { display: flex; }
+    .phone-fallback .ico { font-size: 40px; }
+    .phone-fallback a { color: var(--accent); font-weight: 600; }
+
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      padding: 16px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.75);
+      border-bottom: 1px solid var(--border);
+      z-index: 50;
+    }
+    .topbar a.back { color: var(--text); text-decoration: none; font-weight: 600; font-size: .92rem; }
+    .topbar a.back::before { content: '←  '; }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="back" href="index.html">Zurück zur Investor-Seite</a>
+    <span style="color: var(--text-muted); font-size: .85rem;">Live-Demo · akut.jetzt</span>
+  </div>
+
+  <div class="preview-wrap">
+    <div class="preview-info">
+      <span class="badge">Interaktive Vorschau</span>
+      <h1>So fühlt sich <span class="gradient-text">NAH</span> auf dem Smartphone an</h1>
+      <p>
+        Die rechts dargestellte Handy-Vorschau zeigt die aktuelle Inhalts-Version
+        unserer Notfall-Plattform <strong>akut.jetzt</strong> als Dummy.
+        Bedienen Sie die App direkt im Telefon-Rahmen – Wischen, Tippen und
+        Navigation funktionieren wie auf einem echten Gerät.
+      </p>
+      <p>
+        Die finale NAH-App baut auf dieser Basis auf und ergänzt
+        stress-adaptive UI, KI-Klassifikation und Offline-Funktionalität.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://akut.jetzt" target="_blank" rel="noopener">In neuem Tab öffnen</a>
+        <a class="btn btn-ghost" href="index.html">Zurück</a>
+      </div>
+      <div class="hint">
+        Hinweis: Sollte die Einbettung von Ihrem Browser blockiert werden,
+        nutzen Sie bitte den Button „In neuem Tab öffnen“.
+      </div>
+    </div>
+
+    <div class="phone" aria-label="Handy-Vorschau akut.jetzt">
+      <div class="phone-screen">
+        <iframe
+          id="demoFrame"
+          src="https://akut.jetzt"
+          title="akut.jetzt Live-Vorschau"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+        <div class="phone-fallback" id="fallback">
+          <div class="ico">📱</div>
+          <strong>Vorschau nicht eingebettet</strong>
+          <p style="font-size:.85rem;color:var(--text-muted)">
+            akut.jetzt erlaubt evtl. keine iframe-Einbettung.
+          </p>
+          <a href="https://akut.jetzt" target="_blank" rel="noopener">akut.jetzt öffnen →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Fallback erkennen, wenn iframe nicht lädt
+    const f = document.getElementById('demoFrame');
+    const fb = document.getElementById('fallback');
+    let loaded = false;
+    f.addEventListener('load', () => { loaded = true; });
+    setTimeout(() => { if (!loaded) fb.classList.add('show'); }, 4000);
+  </script>
+</body>
+</html>
