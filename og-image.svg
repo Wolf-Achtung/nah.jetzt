@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset=".5" stop-color="#0891b2"/>
+      <stop offset="1" stop-color="#10b981"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".8" cy=".2" r=".6">
+      <stop offset="0" stop-color="#2563eb" stop-opacity=".35"/>
+      <stop offset="1" stop-color="#2563eb" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#1e293b"/>
+    </pattern>
+    <style>
+      .t { font-family: 'Inter', -apple-system, Segoe UI, sans-serif; fill: #f8fafc; }
+      .h { font-weight: 800; font-size: 86px; letter-spacing: -2px; }
+      .s { font-weight: 500; font-size: 32px; fill: #94a3b8; }
+      .b { font-weight: 700; font-size: 22px; fill: #2563eb; letter-spacing: 4px; text-transform: uppercase; }
+      .logo { font-weight: 900; font-size: 56px; fill: #f8fafc; letter-spacing: -1px; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Logo top-left -->
+  <g transform="translate(80,80)">
+    <rect width="64" height="64" rx="14" fill="url(#accent)"/>
+    <text x="32" y="48" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="46" fill="#0b1020">+</text>
+    <text x="84" y="48" class="logo">NAH</text>
+  </g>
+
+  <!-- Badge -->
+  <text x="80" y="270" class="t b">Investor Relations · Seed</text>
+
+  <!-- Headline -->
+  <text x="80" y="350" class="t h">Die erste Notfall-App,</text>
+  <text x="80" y="445" class="t h" fill="url(#accent)">die mitdenkt.</text>
+
+  <!-- Sub -->
+  <text x="80" y="510" class="t s">Stress-adaptive KI · Offline · 8 Sprachen · ERC 2021</text>
+
+  <!-- URL -->
+  <text x="80" y="580" class="t" font-weight="600" font-size="26" fill="#cbd5e1">nah.jetzt</text>
+
+  <!-- Decorative pulse circle right -->
+  <g transform="translate(960,315)" opacity=".9">
+    <circle r="180" fill="none" stroke="url(#accent)" stroke-width="2" opacity=".3"/>
+    <circle r="140" fill="none" stroke="url(#accent)" stroke-width="2" opacity=".5"/>
+    <circle r="100" fill="none" stroke="url(#accent)" stroke-width="3" opacity=".7"/>
+    <circle r="60" fill="url(#accent)" opacity=".25"/>
+    <text text-anchor="middle" y="22" font-family="Inter,sans-serif" font-weight="900" font-size="64" fill="#f8fafc">+</text>
+  </g>
+</svg>

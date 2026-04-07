@@ -54,7 +54,7 @@ async def security_headers(request, call_next):
 
 **Wichtig:**
 - `frame-ancestors 'self' https://nah.jetzt` → ersetzt `X-Frame-Options` (moderner, granularer).
-- Wenn ein Reverse-Proxy (Nginx/Caddy) davorsteht, dort die alten `X-Frame-Options`-Header **entfernen**, sonst überschreiben sie die App-Header.
+- Auf Railway läuft standardmäßig **kein eigener Reverse-Proxy** – die Header aus der FastAPI-Middleware kommen direkt beim Browser an. Du musst nichts Zusätzliches konfigurieren. Falls Du später Caddy/Nginx davorsetzt, dort `X-Frame-Options` und doppelte `Content-Security-Policy`-Header entfernen.
 - `connect-src` muss `wss://nah.jetzt` enthalten, falls WebSockets genutzt werden.
 
 ---
@@ -148,7 +148,43 @@ app.add_middleware(
 
 ---
 
-## 9. Offene Fragen ans Team
+## 9. Sicherer Demo-Modus (`?demo=1`)
+
+Damit Investoren die App in der Live-Vorschau auf `nah.jetzt/preview.html`
+ohne echte Notfall-Auslösung bedienen können, soll die App einen
+**Demo-Modus** unterstützen:
+
+- Aktivierung über Query-Param `?demo=1` oder Header `X-NAH-Demo: 1`.
+- In diesem Modus deaktivieren:
+  - echte 112-Wahl (`tel:`-Links → `event.preventDefault()` + Toast „Demo-Modus")
+  - Geolocation-Dauerabfragen
+  - Push-Notifications-Anforderung
+  - Telemetrie / Analytics-Events
+  - Bezahl-/Abo-Flows
+- Aktivierung sichtbar machen: Badge oben „Demo-Modus".
+- State im `sessionStorage` speichern, damit interne Navigation den Modus behält.
+
+```js
+const demo = new URLSearchParams(location.search).get('demo') === '1'
+          || sessionStorage.getItem('nah_demo') === '1';
+if (demo) {
+  sessionStorage.setItem('nah_demo', '1');
+  document.documentElement.dataset.demo = 'true';
+}
+```
+
+```css
+html[data-demo="true"]::before {
+  content: "Demo-Modus";
+  position: fixed; top: 8px; left: 50%; transform: translateX(-50%);
+  background: #2563eb; color: #fff; padding: 4px 12px;
+  border-radius: 999px; font: 600 12px/1 Inter, sans-serif; z-index: 99999;
+}
+```
+
+---
+
+## 10. Offene Fragen ans Team
 
 1. Ist `akut.jetzt` aktuell registriert/gehostet, oder ausschließlich Code-Name?
 2. Welcher Reverse-Proxy steht vor FastAPI (Caddy / Nginx / Railway-Default)?
