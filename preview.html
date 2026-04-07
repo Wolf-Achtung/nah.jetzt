@@ -46,12 +46,25 @@
       background: #f1f5f9; border-radius: 6px; font-size: .9rem; color: var(--text-muted);
     }
 
+    .device-switch { display: inline-flex; gap: 6px; margin-top: 18px; padding: 4px;
+      background: #fff; border: 1px solid var(--border); border-radius: 999px; }
+    .device-switch button {
+      border: 0; background: transparent; padding: 8px 14px; border-radius: 999px;
+      font: inherit; font-size: .85rem; font-weight: 600; cursor: pointer; color: var(--text-muted);
+    }
+    .device-switch button.active { background: var(--accent); color: #fff; }
+
+    .qr { margin-top: 20px; display: flex; align-items: center; gap: 14px; }
+    .qr img { width: 96px; height: 96px; border: 1px solid var(--border); border-radius: 8px; background: #fff; padding: 6px; }
+    .qr small { color: var(--text-muted); font-size: .82rem; line-height: 1.5; max-width: 220px; }
+
     /* iPhone-style frame */
     .phone {
       position: relative;
-      width: 360px;
-      height: 740px;
+      width: var(--phone-w, 360px);
+      height: var(--phone-h, 740px);
       margin: 0 auto;
+      transition: width .35s ease, height .35s ease;
       background: #0b1020;
       border-radius: 46px;
       padding: 14px;
@@ -127,13 +140,26 @@
         Die finale NAH-App baut auf dieser Basis auf und ergänzt
         stress-adaptive UI, KI-Klassifikation und Offline-Funktionalität.
       </p>
-      <div class="actions">
-        <a class="btn btn-primary" href="https://akut.jetzt" target="_blank" rel="noopener">In neuem Tab öffnen</a>
-        <a class="btn btn-ghost" href="index.html">Zurück</a>
+      <div class=”actions”>
+        <a class=”btn btn-primary” href=”https://akut.jetzt” target=”_blank” rel=”noopener”>In neuem Tab öffnen</a>
+        <a class=”btn btn-ghost” href=”index.html”>Zurück</a>
       </div>
-      <div class="hint">
-        Hinweis: Sollte die Einbettung von Ihrem Browser blockiert werden,
-        nutzen Sie bitte den Button „In neuem Tab öffnen“.
+
+      <div class=”device-switch” role=”tablist” aria-label=”Geräte-Auswahl”>
+        <button type=”button” data-w=”360” data-h=”740” class=”active”>iPhone</button>
+        <button type=”button” data-w=”380” data-h=”780”>Pixel</button>
+        <button type=”button” data-w=”540” data-h=”780”>Tablet</button>
+      </div>
+
+      <div class=”qr”>
+        <img src=”https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=0&data=https%3A%2F%2Fnah.jetzt” alt=”QR-Code für nah.jetzt”>
+        <small>QR-Code mit dem Handy scannen, um die Demo direkt auf einem echten Gerät zu öffnen.</small>
+      </div>
+
+      <div class=”hint”>
+        Hinweis: akut.jetzt blockiert aktuell die iframe-Einbettung
+        (<code>X-Frame-Options</code> / <code>frame-ancestors</code>). Sobald die
+        CSP-Anpassung aus dem internen Briefing umgesetzt ist, läuft die App direkt im Rahmen.
       </div>
     </div>
 
@@ -159,12 +185,30 @@
   </div>
 
   <script>
-    // Fallback erkennen, wenn iframe nicht lädt
+    // Fallback erkennen, wenn iframe nicht lädt (Cross-Origin: load feuert auch bei Block)
     const f = document.getElementById('demoFrame');
     const fb = document.getElementById('fallback');
-    let loaded = false;
-    f.addEventListener('load', () => { loaded = true; });
-    setTimeout(() => { if (!loaded) fb.classList.add('show'); }, 4000);
+    setTimeout(() => {
+      try {
+        // Wenn iframe wegen X-Frame-Options blockiert wurde, ist contentDocument null
+        if (!f.contentWindow || !f.contentWindow.length === undefined) {}
+      } catch (e) {}
+      // Heuristik: bei sichtbar leerem Frame Fallback einblenden
+      const r = f.getBoundingClientRect();
+      if (r.width < 50 || r.height < 50) fb.classList.add('show');
+    }, 2500);
+    f.addEventListener('error', () => fb.classList.add('show'));
+
+    // Geräte-Umschalter
+    const phone = document.querySelector('.phone');
+    document.querySelectorAll('.device-switch button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.device-switch button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        phone.style.setProperty('--phone-w', btn.dataset.w + 'px');
+        phone.style.setProperty('--phone-h', btn.dataset.h + 'px');
+      });
+    });
   </script>
 </body>
 </html>
