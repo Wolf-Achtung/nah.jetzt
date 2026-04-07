@@ -131,17 +131,18 @@
       <span class="badge">Interaktive Vorschau</span>
       <h1>So fühlt sich <span class="gradient-text">NAH</span> auf dem Smartphone an</h1>
       <p>
-        Die rechts dargestellte Handy-Vorschau zeigt die aktuelle Inhalts-Version
-        unserer Notfall-Plattform <strong>akut.jetzt</strong> als Dummy.
-        Bedienen Sie die App direkt im Telefon-Rahmen – Wischen, Tippen und
-        Navigation funktionieren wie auf einem echten Gerät.
+        Die rechts dargestellte Handy-Vorschau zeigt die aktuelle Version
+        unserer Notfall-Plattform live unter <strong>app.nah.jetzt</strong>
+        im sicheren Demo-Modus. Bedienen Sie die App direkt im Telefon-Rahmen –
+        Wischen, Tippen und Navigation funktionieren wie auf einem echten Gerät,
+        es werden aber keine echten Notrufe ausgelöst.
       </p>
       <p>
         Die finale NAH-App baut auf dieser Basis auf und ergänzt
         stress-adaptive UI, KI-Klassifikation und Offline-Funktionalität.
       </p>
       <div class=”actions”>
-        <a class=”btn btn-primary” href=”https://akut.jetzt” target=”_blank” rel=”noopener”>In neuem Tab öffnen</a>
+        <a class=”btn btn-primary” href=”https://app.nah.jetzt/?demo=1” target=”_blank” rel=”noopener”>In neuem Tab öffnen</a>
         <a class=”btn btn-ghost” href=”index.html”>Zurück</a>
       </div>
 
@@ -152,14 +153,13 @@
       </div>
 
       <div class=”qr”>
-        <img src=”https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=0&data=https%3A%2F%2Fnah.jetzt” alt=”QR-Code für nah.jetzt”>
+        <img src=”https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=0&data=https%3A%2F%2Fapp.nah.jetzt%2F%3Fdemo%3D1” alt=”QR-Code für app.nah.jetzt”>
         <small>QR-Code mit dem Handy scannen, um die Demo direkt auf einem echten Gerät zu öffnen.</small>
       </div>
 
       <div class=”hint”>
-        Hinweis: akut.jetzt blockiert aktuell die iframe-Einbettung
-        (<code>X-Frame-Options</code> / <code>frame-ancestors</code>). Sobald die
-        CSP-Anpassung aus dem internen Briefing umgesetzt ist, läuft die App direkt im Rahmen.
+        Hinweis: Sollte die Einbettung in Ihrem Browser blockiert sein, nutzen
+        Sie bitte den Button „In neuem Tab öffnen”.
       </div>
     </div>
 
@@ -167,7 +167,7 @@
       <div class="phone-screen">
         <iframe
           id="demoFrame"
-          src="https://nah.jetzt/?demo=1"
+          src="https://app.nah.jetzt/?demo=1"
           title="akut.jetzt Live-Vorschau"
           loading="lazy"
           referrerpolicy="no-referrer"

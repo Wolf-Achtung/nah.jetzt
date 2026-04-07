@@ -1,10 +1,19 @@
-# Briefing: akut.jetzt → ausschließlich über `nah.jetzt` ausliefern
+# Briefing: akut.jetzt → Auslieferung über die nah.jetzt-Domains
 
-**Zielsystem:** `nah-final-production.up.railway.app` (Backend/Frontend der Notfall-App)
-**Ziel-Domain:** `https://nah.jetzt` (Investor-Landingpage + Live-Demo-Einbettung)
-**Ergebnis:** Die Anwendung ist nur noch unter `nah.jetzt` erreichbar, lässt sich
-sauber im Handy-Mockup von `nah.jetzt/preview.html` einbetten und alle Alt-URLs
-(`*.up.railway.app`, ggf. `akut.jetzt`) leiten dauerhaft auf `nah.jetzt` um.
+**Status:** ✅ Umgesetzt (Stand April 2026).
+
+## Finale Architektur
+
+| Domain | Hosting | Inhalt |
+|---|---|---|
+| `nah.jetzt` | Netlify (Repo `Wolf-Achtung/nah.jetzt`) | Investor-Landingpage + `preview.html` mit Handy-Mockup |
+| `app.nah.jetzt` | Railway (Service `NAh-final`) | Notfall-App (FastAPI-Backend + React-Frontend in einem Container) |
+| `nah-final-production.up.railway.app` | Railway | 301 → `https://app.nah.jetzt/` (Host-Redirect-Middleware) |
+| `akut.jetzt` | (Weiterleitung) | 301 → `https://nah.jetzt/` |
+
+**Zentrale Idee:** `nah.jetzt/preview.html` bettet `app.nah.jetzt/?demo=1` per
+iframe ein. Die CSP der App erlaubt Einbettung nur durch `https://nah.jetzt`
+(via `frame-ancestors`). Der Demo-Modus deaktiviert echte Notruf-Aktionen.
 
 ---
 
