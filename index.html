@@ -6,13 +6,36 @@
   <title>NAH - Notfall Assistent Hilfe | Investor Relations</title>
   <meta name="description" content="NAH - Die intelligente Notfall-App, die Leben rettet. KI-gestützte Erste Hilfe in Echtzeit.">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="canonical" href="https://nah.jetzt/">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="NAH – Notfall Assistent Hilfe">
+  <meta property="og:title" content="NAH – KI-gestützte Notfall-App | Investor Relations">
+  <meta property="og:description" content="Die erste Notfall-App, die sich an Ihre Panik anpasst. Stress-adaptive KI, offline, mehrsprachig.">
+  <meta property="og:url" content="https://nah.jetzt/">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:image" content="https://nah.jetzt/og-image.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="NAH – KI-gestützte Notfall-App">
+  <meta name="twitter:description" content="Die erste Notfall-App, die sich an Ihre Panik anpasst.">
+  <meta name="twitter:image" content="https://nah.jetzt/og-image.svg">
+  <!-- Privacy-friendly analytics (Plausible self-hosted) -->
+  <!-- Aktivieren, sobald Plausible unter stats.nah.jetzt läuft:
+  <script defer data-domain="nah.jetzt" src="https://stats.nah.jetzt/js/script.js"></script>
+  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=2">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚨</text></svg>">
 </head>
 <body>
+
+  <a href="#main" class="skip-link">Zum Inhalt springen</a>
 
   <!-- Navigation -->
   <nav class="nav" id="nav">
@@ -29,11 +52,13 @@
         <a href="#team">Team</a>
         <a href="#contact" class="nav-cta">Kontakt</a>
       </div>
-      <button class="nav-mobile-toggle" aria-label="Menü öffnen" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+      <button class="nav-mobile-toggle" aria-label="Menü öffnen" aria-expanded="false" aria-controls="nav-links-list" onclick="(function(b){var l=document.querySelector('.nav-links');var o=l.classList.toggle('open');b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Menü schließen':'Menü öffnen');})(this)">
         <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
+
+  <main id="main">
 
   <!-- Hero -->
   <section class="hero">
@@ -78,7 +103,7 @@
   <section class="section" id="problem">
     <div class="container">
       <div class="section-label">Das Problem</div>
-      <h2>95% der Ersthelfer <span class="gradient-text">vergessen ihr Wissen</span> im Ernstfall</h2>
+      <h2>Die Mehrheit der Ersthelfer <span class="gradient-text">vergisst ihr Wissen</span> im Ernstfall</h2>
       <div class="problem-grid">
         <div class="problem-card">
           <div class="problem-number">70%</div>
@@ -478,6 +503,8 @@
     </div>
   </section>
 
+  </main>
+
   <!-- Footer -->
   <footer class="footer">
     <div class="container footer-inner">
@@ -487,7 +514,11 @@
         <span class="footer-tagline">Notfall Assistent Hilfe</span>
       </div>
       <div class="footer-legal">
-        <p>&copy; 2026 NAH GmbH i.G. | Alle Rechte vorbehalten.</p>
+        <p>
+          &copy; 2026 NAH GmbH i.G. &middot; Alle Rechte vorbehalten. &middot;
+          <a href="impressum.html">Impressum</a> &middot;
+          <a href="datenschutz.html">Datenschutz</a>
+        </p>
         <p class="footer-disclaimer">
           Dieses Dokument dient ausschließlich Informationszwecken und stellt
           kein Angebot zum Kauf von Wertpapieren dar. Vertraulich.
