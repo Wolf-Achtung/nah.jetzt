@@ -111,7 +111,99 @@ app.add_middleware(
 
 ---
 
-## 5. Frontend-seitige Anpassungen
+## 5. Rate-Limiting
+
+Ohne Rate-Limiting können einzelne Clients die API überlasten (DoS) oder
+Brute-Force-Angriffe auf Auth-Endpunkte fahren. Die Implementierung erfolgt
+über `slowapi` (basiert auf `limits`, Redis-kompatibel).
+
+### Installation
+
+```bash
+pip install slowapi
+```
+
+### Basis-Setup (In-Memory, reicht für Single-Instance)
+
+```python
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+```
+
+### Globales Limit + Endpunkt-spezifische Limits
+
+```python
+# Globales Standard-Limit: 60 Requests pro Minute pro IP
+@app.middleware("http")
+async def rate_limit_middleware(request, call_next):
+    return await call_next(request)
+
+# Auth-Endpunkte stärker begrenzen
+@app.post("/api/auth/login")
+@limiter.limit("5/minute")
+async def login(request: Request, ...):
+    ...
+
+# Notfall-Endpunkte großzügiger (lebensrettend – nicht drosseln)
+@app.post("/api/emergency/start")
+@limiter.limit("30/minute")
+async def start_emergency(request: Request, ...):
+    ...
+
+# KI-Chat (teuer, daher begrenzen)
+@app.post("/api/chat")
+@limiter.limit("20/minute")
+async def ai_chat(request: Request, ...):
+    ...
+
+# Standard-API-Endpunkte
+@app.get("/api/{path:path}")
+@limiter.limit("60/minute")
+async def api_catchall(request: Request, ...):
+    ...
+```
+
+### Produktion: Redis-Backend (Multi-Instance)
+
+Wenn mehrere Railway-Replicas laufen, braucht der Limiter ein geteiltes
+Backend:
+
+```python
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+
+limiter = Limiter(
+    key_func=get_remote_address,
+    storage_uri=os.environ.get("REDIS_URL", "memory://"),
+    # Alternatives Format: "redis://user:pass@host:6379/0"
+)
+```
+
+### Response-Header
+
+`slowapi` setzt automatisch `X-RateLimit-Limit`, `X-RateLimit-Remaining`
+und `Retry-After` Header – Clients können sich darauf einstellen.
+
+### Wichtige Hinweise
+
+- **Notfall-Endpunkte** niemals zu restriktiv limitieren – im Zweifel lieber
+  keinen echten Notruf blockieren.
+- **Hinter einem Proxy** (Railway, Caddy, Nginx): `get_remote_address`
+  liest die IP aus `X-Forwarded-For`. Sicherstellen, dass der Proxy diesen
+  Header korrekt setzt und nicht von Clients fälschbar ist
+  (`ProxyFix`-Middleware oder `trusted_hosts`).
+- **WebSocket-Verbindungen** separat behandeln – `slowapi` greift nur bei
+  HTTP-Requests. Für WS rate-limiting z.B. einen Token-Bucket pro
+  Connection im Application-Layer implementieren.
+
+---
+
+## 6. Frontend-seitige Anpassungen
 
 - **Canonical:** `<link rel="canonical" href="https://nah.jetzt/">` im `<head>` setzen.
 - **Absolute URLs / API-Base:** Hardcoded `*.railway.app`-URLs durch
@@ -123,7 +215,7 @@ app.add_middleware(
 
 ---
 
-## 6. SEO & Indexierung
+## 7. SEO & Indexierung
 
 - `robots.txt` auf der Railway-URL (vor Redirect) ist irrelevant, sobald der 301
   greift – Suchmaschinen folgen automatisch.
@@ -134,7 +226,7 @@ app.add_middleware(
 
 ---
 
-## 7. Test-Checklist (vor Go-Live)
+## 8. Test-Checklist (vor Go-Live)
 
 - [ ] `curl -I https://nah-final-production.up.railway.app` → `301` nach `nah.jetzt`
 - [ ] `curl -I https://akut.jetzt` → `301` nach `nah.jetzt` (falls noch live)
@@ -144,12 +236,15 @@ app.add_middleware(
 - [ ] Aufruf von `https://nah.jetzt/preview.html` zeigt die App **eingebettet** im Handy-Mockup
 - [ ] WebSocket-Verbindung funktioniert (`wss://nah.jetzt/...`)
 - [ ] Service-Worker registriert sich auf `nah.jetzt`
+- [ ] Rate-Limiting: `curl` 6× schnell hintereinander auf `/api/auth/login` → 429 ab dem 6. Request
+- [ ] Rate-Limiting: `/api/emergency/start` bleibt erreichbar (30/min Limit)
+- [ ] Rate-Limiting: Response enthält `X-RateLimit-Remaining` Header
 - [ ] Lighthouse: Performance ≥ 90, Best Practices ≥ 95, A11y ≥ 95
 - [ ] Mobile (iOS Safari + Android Chrome) End-to-End-Test
 
 ---
 
-## 8. Rollback-Plan
+## 9. Rollback-Plan
 
 - Railway: alten Service-Snapshot (vor Header-Änderung) deployen.
 - DNS: TTL vor Migration auf 300 s setzen, danach wieder 3600 s.
@@ -157,7 +252,7 @@ app.add_middleware(
 
 ---
 
-## 9. Sicherer Demo-Modus (`?demo=1`)
+## 10. Sicherer Demo-Modus (`?demo=1`)
 
 Damit Investoren die App in der Live-Vorschau auf `nah.jetzt/preview.html`
 ohne echte Notfall-Auslösung bedienen können, soll die App einen
@@ -193,7 +288,7 @@ html[data-demo="true"]::before {
 
 ---
 
-## 10. Offene Fragen ans Team
+## 11. Offene Fragen ans Team
 
 1. Ist `akut.jetzt` aktuell registriert/gehostet, oder ausschließlich Code-Name?
 2. Welcher Reverse-Proxy steht vor FastAPI (Caddy / Nginx / Railway-Default)?
