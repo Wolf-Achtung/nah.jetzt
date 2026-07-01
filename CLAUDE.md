@@ -7,7 +7,7 @@ Die eigentliche Notfall-App läuft separat (Briefing siehe `BRIEFING-akut.jetzt.
 
 ## Dateien
 - `index.html` – Hauptseite (Hero, Problem, Lösung, Markt, Traction, Team, Ask, Kontakt)
-- `preview.html` – Live-Demo mit Handy-Mockup (iframe auf nah.jetzt selbst, `?demo=1`)
+- `preview.html` – Live-Demo mit Handy-Mockup (iframe auf `app.nah.jetzt`, `?demo=1`)
 - `impressum.html`, `datenschutz.html` – Rechtsseiten (Platzhalter, juristisch zu prüfen)
 - `styles.css` – einziges Stylesheet, eingebunden mit `?v=N` Cache-Bust
 - `og-image.svg` – Open-Graph-Bild 1200×630
