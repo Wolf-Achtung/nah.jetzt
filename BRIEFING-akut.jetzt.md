@@ -2,6 +2,15 @@
 
 **Status:** ✅ Umgesetzt (Stand April 2026).
 
+> **Korrektur (Stand Juli 2026):** `akut.jetzt` war zwischenzeitlich kein
+> reiner Redirect, sondern ein eigenständiges, aktiv gebautes zweites
+> Netlify-Deployment (siehe `BRIEFING-offene-audit-punkte.md` im Repo
+> `NAh-final`, Punkt 5). Inzwischen retired und per `netlify.toml`
+> (Repo `NAh-final`) auf **`https://app.nah.jetzt`** umgeleitet — nicht auf
+> `https://nah.jetzt` wie in der ursprünglichen Planung unten. Der Rest
+> dieses Dokuments beschreibt den ursprünglichen Planungsstand und ist nur
+> noch als historischer Kontext zu lesen.
+
 ## Finale Architektur
 
 | Domain | Hosting | Inhalt |
@@ -9,7 +18,7 @@
 | `nah.jetzt` | Netlify (Repo `Wolf-Achtung/nah.jetzt`) | Investor-Landingpage + `preview.html` mit Handy-Mockup |
 | `app.nah.jetzt` | Railway (Service `NAh-final`) | Notfall-App (FastAPI-Backend + React-Frontend in einem Container) |
 | `nah-final-production.up.railway.app` | Railway | 301 → `https://app.nah.jetzt/` (Host-Redirect-Middleware) |
-| `akut.jetzt` | (Weiterleitung) | 301 → `https://nah.jetzt/` |
+| `akut.jetzt` | (Weiterleitung) | 301 → `https://app.nah.jetzt/` (s. Korrektur oben) |
 
 **Zentrale Idee:** `nah.jetzt/preview.html` bettet `app.nah.jetzt/?demo=1` per
 iframe ein. Die CSP der App erlaubt Einbettung nur durch `https://nah.jetzt`
