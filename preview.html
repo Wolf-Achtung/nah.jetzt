@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=3">
+  <link rel="stylesheet" href="styles.css?v=4">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚨</text></svg>">
   <style>
     body { background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%); min-height: 100vh; }
@@ -52,7 +52,7 @@
     .preview-info p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.65; margin-bottom: 16px; }
     .preview-info .badge {
       display: inline-block; padding: 6px 14px; border-radius: 999px;
-      background: var(--accent-soft); color: var(--accent);
+      background: var(--accent-soft); color: #1d4ed8;
       font-size: .8rem; font-weight: 600; letter-spacing: .03em;
       text-transform: uppercase; margin-bottom: 18px;
     }
@@ -164,10 +164,10 @@
         <a class="btn btn-ghost" href="index.html">Zurück</a>
       </div>
 
-      <div class="device-switch" role="tablist" aria-label="Geräte-Auswahl">
-        <button type="button" data-w="360" data-h="740" class="active">iPhone</button>
-        <button type="button" data-w="380" data-h="780">Pixel</button>
-        <button type="button" data-w="540" data-h="780">Tablet</button>
+      <div class="device-switch" role="group" aria-label="Geräte-Auswahl">
+        <button type="button" data-w="360" data-h="740" class="active" aria-pressed="true">iPhone</button>
+        <button type="button" data-w="380" data-h="780" aria-pressed="false">Pixel</button>
+        <button type="button" data-w="540" data-h="780" aria-pressed="false">Tablet</button>
       </div>
 
       <div class="qr">
@@ -218,8 +218,12 @@
     const phone = document.querySelector('.phone');
     document.querySelectorAll('.device-switch button').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.device-switch button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.device-switch button').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
         btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
         phone.style.setProperty('--phone-w', btn.dataset.w + 'px');
         phone.style.setProperty('--phone-h', btn.dataset.h + 'px');
       });
