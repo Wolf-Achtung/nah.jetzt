@@ -14,7 +14,7 @@
   --bg-warm: #fefcf9;
   --text: #1e293b;
   --text-muted: #64748b;
-  --text-dim: #94a3b8;
+  --text-dim: #64748b;
   --accent: #2563eb;
   --accent-light: #3b82f6;
   --accent-soft: #dbeafe;
@@ -23,7 +23,7 @@
   --gradient-warm: linear-gradient(135deg, #2563eb 0%, #0891b2 50%, #10b981 100%);
   --success: #059669;
   --success-bg: #ecfdf5;
-  --warning: #d97706;
+  --warning: #b45309;
   --warning-bg: #fffbeb;
   --danger: #dc2626;
   --danger-bg: #fef2f2;

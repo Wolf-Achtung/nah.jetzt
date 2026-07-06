@@ -35,4 +35,4 @@ jobs:
             --assert.assertions.categories:performance=warn \
             --assert.assertions.categories:accessibility=error \
             --assert.assertions.categories:best-practices=warn \
-            --assert.assertions.categories:seo=warn || true
+            --assert.assertions.categories:seo=warn
